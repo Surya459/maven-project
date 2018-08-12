@@ -3,8 +3,8 @@ agent any
 stages{
       stage('Build'){
           steps {
-	     echo 'now building...'
-	     }
+	        sh 'mvn clean package'
+		}
 	     post {
 	     success {
 	        echo 'now archiving...'
