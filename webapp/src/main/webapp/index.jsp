@@ -6,4 +6,4 @@ chnaged via git
 
 Testing polling!
 
-after adding ssh auth
+after adding ssh autho
