@@ -1,3 +1,3 @@
 Hello, World!
 
-installed through ansible 
+installed through docker and jenkins
