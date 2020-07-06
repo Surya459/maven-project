@@ -1,35 +1,23 @@
-pipeline {
-agent any
+pipeline{
+     agent any
+	 tools{
+	 maven 'maven-jenkins'
+	 }
+	 
+	 stages{
+	   stage('Build'){
+	   steps{
+	   
+	    sh script: 'mvn clean package'
+		}
+	   }
+	   
+	   stage('Upload war to nexus'){
+	   steps{
+	   
+	    nexusArtifactUploader artifacts: [[artifactId: 'maven-project', classifier: '', file: 'target/Maven Project-1.0.war', type: 'war']], credentialsId: 'nexus3', groupId: 'com.example.maven-project', nexusUrl: 'http://13.234.231.5:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'http://13.234.231.5:8081/repository/nexus-pipeline/', version: '1.0'
+		}
+	   }
+	 }
 
-    parameters {
-         string(name: 'tomcat_dev', defaultValue: '18.191.199.50', description: 'Staging Server')
-    }
-
-    triggers {
-         pollSCM('* * * * *')
-     }
-
-stages{
-        stage('Build'){
-            steps {
-                bat 'mvn clean package'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
-
-        stage ('Deployments'){
-            parallel{
-                stage ('Deploy to Staging'){
-                    steps {
-                        bat "winscp -i /e/programming/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
-                    }
-                }
-                }
-            }
-        }
-    }
+}
