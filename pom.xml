@@ -83,7 +83,7 @@
         </configuration>
       </plugin>
     </plugins>
-<!-- testing git webhook--->
+<!-- testing git jenkins  webhook--->
     <pluginManagement>
       <plugins>
         <plugin>
